@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Human Evolution | Un-Essay Project</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --panel: #111827;
+      --panel-2: #1f2937;
+      --text: #e5e7eb;
+      --muted: #cbd5e1;
+      --accent: #f59e0b;
+      --accent-2: #22c55e;
+      --line: #334155;
+      --white: #ffffff;
+      --shadow: 0 10px 30px rgba(0,0,0,.25);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, #0b1020 0%, #111827 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(15, 23, 42, 0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+    }
+
+    .nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 20px;
+    }
+
+    .brand {
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: var(--white);
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 0.95rem;
+    }
+
+    .hero {
+      min-height: 82vh;
+      display: grid;
+      place-items: center;
+      padding: 80px 20px 50px;
+      background:
+        linear-gradient(rgba(2,6,23,.6), rgba(2,6,23,.8)),
+        url('./images/evolution.png') center/cover;
+      text-align: center;
+    }
+
+    .hero-inner {
+      max-width: 900px;
+    }
+
+    .tag {
+      display: inline-block;
+      margin-bottom: 16px;
+      background: rgba(245, 158, 11, 0.15);
+      color: #fde68a;
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 0.92rem;
+    }
+
+    h1 {
+      font-size: clamp(2.3rem, 6vw, 4.8rem);
+      line-height: 1.08;
+      margin: 0 0 18px;
+      color: var(--white);
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      max-width: 760px;
+      margin: 0 auto 24px;
+      color: #e2e8f0;
+    }
+
+    .button-row {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 18px;
+      border-radius: 999px;
+      font-weight: 700;
+      border: 1px solid transparent;
+      transition: transform .2s ease, opacity .2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #111827;
+    }
+
+    .btn-secondary {
+      border-color: rgba(255,255,255,0.25);
+      color: var(--white);
+      background: rgba(255,255,255,0.04);
+    }
+
+    main {
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 28px 20px 70px;
+    }
+
+    section {
+      margin: 30px 0;
+      padding: 28px;
+      background: rgba(17, 24, 39, 0.86);
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 2rem;
+      color: var(--white);
+    }
+
+    h3 {
+      color: #f8fafc;
+      margin-bottom: 8px;
+    }
+
+    .lead {
+      color: var(--muted);
+      font-size: 1.05rem;
+      margin-bottom: 20px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 20px;
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(30,41,59,.9), rgba(15,23,42,.95));
+      border: 1px solid rgba(148,163,184,0.12);
+      border-radius: 16px;
+      padding: 20px;
+    }
+
+    .timeline {
+      position: relative;
+      margin-top: 10px;
+      padding-left: 22px;
+      border-left: 3px solid rgba(245, 158, 11, 0.55);
+    }
+
+    .timeline-item {
+      position: relative;
+      padding: 0 0 22px 18px;
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -31px;
+      top: 6px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 6px rgba(245, 158, 11, 0.15);
+    }
+
+    .date {
+      font-weight: 700;
+      color: #fde68a;
+      font-size: 0.95rem;
+    }
+
+    .fact-list {
+      padding-left: 20px;
+      margin: 10px 0 0;
+    }
+
+    .fact-list li {
+      margin-bottom: 10px;
+    }
+
+    .comparison {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      min-width: 640px;
+    }
+
+    th, td {
+      border: 1px solid var(--line);
+      padding: 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #172033;
+      color: var(--white);
+    }
+
+    .quote {
+      border-left: 4px solid var(--accent-2);
+      padding: 10px 16px;
+      background: rgba(34, 197, 94, 0.08);
+      border-radius: 10px;
+      color: #dcfce7;
+      margin-top: 12px;
+    }
+
+    .quiz-box {
+      background: rgba(245,158,11,0.08);
+      border: 1px solid rgba(245,158,11,0.25);
+      border-radius: 16px;
+      padding: 20px;
+    }
+
+    .quiz-box button {
+      margin-top: 12px;
+      padding: 10px 14px;
+      border: none;
+      border-radius: 10px;
+      background: var(--accent);
+      color: #111827;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    footer {
+      text-align: center;
+      color: #94a3b8;
+      padding: 26px 18px 40px;
+    }
+.overview-bg {
+  position: relative;
+  background:
+    linear-gradient(rgba(2,6,23,.75), rgba(2,6,23,.85)),
+    url('./images/overview.png') center/cover;
+}
+.timeline-bg {
+  position: relative;
+  background:
+    linear-gradient(rgba(2,6,23,.75), rgba(2,6,23,.85)),
+    url('./images/timeline.png') center/cover;
+}
+.species-bg {
+  position: relative;
+  background:
+    linear-gradient(rgba(2,6,23,.75), rgba(2,6,23,.85)),
+    url('./images/species.png') center/cover;
+}
+.know-bg {
+  position: relative;
+  background:
+    linear-gradient(rgba(2,6,23,.75), rgba(2,6,23,.85)),
+    url('./images/know.png') center/cover;
+}
+.matters-bg {
+  position: relative;
+  background:
+    linear-gradient(rgba(2,6,23,.75), rgba(2,6,23,.85)),
+    url('./images/matters.png') center/cover;
+}
+.source-bg {
+  position: relative;
+  background:
+    linear-gradient(rgba(2,6,23,.75), rgba(2,6,23,.85)),
+    url('./images/source.png') center/cover;
+}
+
+    .bibliography {
+      padding: 40px 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .reflection {
+      width: 100%;
+      max-width: none;
+      padding: 60px 80px;
+      column-count: 2;
+      column-gap: 50px;
+	  background:
+    linear-gradient(rgba(2,6,23,.8), rgba(2,6,23,.9)),
+    url('./images/essay.png') center/cover;
+	   
+    }
+	
+
+    .reflection h2 {
+      column-span: all;
+      margin-bottom: 24px;
+    }
+
+    .reflection p {
+      margin-top: 0;
+    }
+
+    @media (max-width: 900px) {
+      .grid-2,
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+
+      .nav {
+        gap: 10px;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      section {
+        padding: 22px;
+      }
+
+      .reflection {
+        column-count: 1;
+        padding: 30px 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="nav">
+      <div class="brand">Human Evolution</div>
+      <div class="nav-links">
+        <a href="#overview">Overview</a>
+        <a href="#timeline">Evolution Timeline</a>
+        <a href="#species">Major Hominin Species</a>
+        <a href="#evidence">How We Know</a>
+        <a href="#importance">Why Human Evolution Matters</a>
+        <a href="#sources">Sources</a>
+        <a href="#reflection">Reflection Essay</a>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="tag">Un-Essay Website Project</div>
+      <h1>The Story of Human Evolution</h1>
+      <p>
+        Human evolution is not a straight line from “primitive” to “modern.” It is a long,
+        branching story of adaptation, survival, migration, and biological change. By studying
+        fossils, anatomy, genetics, and archaeology, scientists reconstruct how our species emerged.
+      </p>
+      <div class="button-row">
+        <a class="btn btn-primary" href="#timeline">Explore the Timeline</a>
+        <a class="btn btn-secondary" href="#sources">View Sources</a>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <section id="overview" class="overview-bg">
+      <h2>Overview</h2>
+      <p class="lead">
+        Human evolution examines how hominins changed over millions of years, eventually leading to
+        <em>Homo sapiens</em>. This topic connects biology, anthropology, archaeology, and environmental change.
+      </p>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>Key Idea</h3>
+          <p>
+            Humans share common ancestry with other primates. Over time, certain populations evolved
+            traits such as bipedalism, increased brain size, tool use, language capacity, and cultural complexity.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Why Scientists Study It</h3>
+          <p>
+            Human evolution helps explain where we came from, how we adapted to different environments,
+            and why the human body and behavior look the way they do today.
+          </p>
+        </div>
+      </div>
+      <div class="quote">
+        Human evolution is best understood as a branching tree, not a ladder.
+      </div>
+    </section>
+
+    <section id="timeline"class="timeline-bg">
+      <h2>Evolution Timeline</h2>
+      <p class="lead">This simplified timeline highlights several important stages in hominin evolution.</p>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="date">~7 to 6 million years ago</div>
+          <h3>Earliest Hominins</h3>
+          <p>
+            Some of the earliest possible hominins, such as <em>Sahelanthropus tchadensis</em>, show traits that may relate to upright posture.
+          </p>
+        </div>
+        <div class="timeline-item">
+          <div class="date">~4.4 million years ago</div>
+          <h3><em>Ardipithecus ramidus</em></h3>
+          <p>
+            This species shows a mix of ape-like and hominin traits, giving insight into the shift toward bipedal movement.
+          </p>
+        </div>
+        <div class="timeline-item">
+          <div class="date">~3.9 to 3.0 million years ago</div>
+          <h3><em>Australopithecus afarensis</em></h3>
+          <p>
+            Famous for the fossil "Lucy," this species walked upright but still retained some climbing adaptations.
+          </p>
+        </div>
+        <div class="timeline-item">
+          <div class="date">~2.4 to 1.4 million years ago</div>
+          <h3><em>Homo habilis</em></h3>
+          <p>
+            Often associated with early stone tools, this species shows increasing brain size compared with earlier hominins.
+          </p>
+        </div>
+        <div class="timeline-item">
+          <div class="date">~1.9 million to 110,000 years ago</div>
+          <h3><em>Homo erectus</em></h3>
+          <p>
+            A highly successful species that spread beyond Africa. It had a more human-like body shape and is linked to more advanced tool use.
+          </p>
+        </div>
+        <div class="timeline-item">
+          <div class="date">~400,000 to 40,000 years ago</div>
+          <h3>Neanderthals and Other Later Hominins</h3>
+          <p>
+            Neanderthals adapted to Ice Age Eurasia and displayed sophisticated behavior, including care for group members and tool traditions.
+          </p>
+        </div>
+        <div class="timeline-item">
+          <div class="date">~300,000 years ago to present</div>
+          <h3><em>Homo sapiens</em></h3>
+          <p>
+            Our species evolved in Africa and later spread globally, carrying with it complex symbolic behavior, art, and advanced technologies.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="species" class="species-bg">
+      <h2>Major Hominin Species</h2>
+      <p class="lead">Each species contributes a different piece to the story of human evolution.</p>
+      <div class="grid grid-3">
+        <div class="card">
+          <h3><em>Australopithecus afarensis</em></h3>
+          <p>
+            Known for clear evidence of bipedalism. The skeleton of Lucy helped scientists understand early upright walking.
+          </p>
+        </div>
+        <div class="card">
+          <h3><em>Homo habilis</em></h3>
+          <p>
+            Sometimes called “handy man” because of its connection to tool use. Represents a shift toward greater manual skill and cognition.
+          </p>
+        </div>
+        <div class="card">
+          <h3><em>Homo erectus</em></h3>
+          <p>
+            Had longer legs, efficient walking, and one of the longest time ranges of any hominin species.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Neanderthals</h3>
+          <p>
+            Robust hominins adapted to colder climates. Evidence suggests they buried their dead and used specialized tools.
+          </p>
+        </div>
+        <div class="card">
+          <h3><em>Homo sapiens</em></h3>
+          <p>
+            Characterized by a high, rounded skull, smaller brow ridges, and extensive symbolic and cultural behavior.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Denisovans</h3>
+          <p>
+            Known mainly from DNA and fragmentary remains, Denisovans show that human evolution includes lineages once invisible in the fossil record.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="evidence"class="know-bg">
+      <h2>How We Know</h2>
+      <p class="lead">Human evolution is supported by multiple lines of evidence.</p>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>Fossils</h3>
+          <ul class="fact-list">
+            <li>Skulls reveal brain size, facial structure, and jaw shape.</li>
+            <li>Pelvis and leg bones show whether a species walked upright.</li>
+            <li>Teeth provide clues about diet and development.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Archaeology</h3>
+          <ul class="fact-list">
+            <li>Stone tools show planning, skill, and cultural transmission.</li>
+            <li>Cut marks on bones indicate hunting or butchering behavior.</li>
+            <li>Burials, pigments, and art suggest symbolic thinking.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Comparative Anatomy</h3>
+          <ul class="fact-list">
+            <li>Humans and other primates share many skeletal similarities.</li>
+            <li>Differences in the spine, pelvis, and foot reflect bipedalism.</li>
+            <li>Hand anatomy helps explain tool use and dexterity.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Genetics</h3>
+          <ul class="fact-list">
+            <li>DNA confirms close evolutionary relationships with other primates.</li>
+            <li>Ancient DNA reveals interbreeding between modern humans and Neanderthals.</li>
+            <li>Genetic variation helps trace migration and population history.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="comparison">
+        <table>
+          <thead>
+            <tr>
+              <th>Trait</th>
+              <th>Earlier Hominins</th>
+              <th>Later Homo Species</th>
+              <th><em>Homo sapiens</em></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Brain Size</td>
+              <td>Smaller overall cranial capacity</td>
+              <td>Steadily increasing</td>
+              <td>Large and highly reorganized</td>
+            </tr>
+            <tr>
+              <td>Locomotion</td>
+              <td>Bipedal but still partly adapted for climbing</td>
+              <td>More efficient upright walking</td>
+              <td>Fully committed bipedalism</td>
+            </tr>
+            <tr>
+              <td>Tool Use</td>
+              <td>Limited or simple tool associations</td>
+              <td>More complex stone industries</td>
+              <td>Advanced, symbolic, and highly diverse technologies</td>
+            </tr>
+            <tr>
+              <td>Culture</td>
+              <td>Minimal evidence</td>
+              <td>Growing behavioral complexity</td>
+              <td>Art, language, ritual, and global adaptation</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="importance"class="matters-bg">
+      <h2>Why Human Evolution Matters </h2>
+      <p class="lead">
+        Human evolution is not just about the past. It shapes how we understand modern anatomy, health, behavior, and identity.
+      </p>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>Biological Importance</h3>
+          <p>
+            Evolution explains why humans walk upright, why childbirth is difficult, why our teeth and jaws changed, and why our bodies still reflect older adaptations.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Cultural Importance</h3>
+          <p>
+            Studying our origins helps us think critically about what it means to be human and how culture, environment, and biology interact.
+          </p>
+        </div>
+      </div>
+      <div class="quiz-box">
+        <h3>Quick Knowledge Check</h3>
+        <p><strong>Question:</strong> Is human evolution a straight ladder leading to modern humans?</p>
+        <button onclick="showAnswer()">Reveal Answer</button>
+        <p id="quiz-answer" style="display:none; margin-top:12px; color:#fde68a; font-weight:700;">
+          No. Human evolution is a branching process with multiple related hominin species, not a single straight line.
+        </p>
+      </div>
+    </section>
+
+    <section id="sources"class="source-bg">
+      <h2>Sources</h2>
+      <div class="grid grid-2">
+        <div class="card">
+          <p><strong><a href="https://humanorigins.si.edu/" target="_blank">Smithsonian National Museum of Natural History – Human Origins Program</a></strong></p>
+          <p>A reliable overview source for timelines, fossils, and major species in human evolution.</p>
+        </div>
+
+        <div class="card">
+          <p><strong><a href="https://www.nhm.ac.uk/discover/human-evolution.html" target="_blank">Natural History Museum – Human Evolution Overview</a></strong></p>
+          <p>Includes research and insights connected to Chris Stringer and modern human origins.</p>
+        </div>
+
+        <div class="card">
+          <p><strong><a href="https://www.britannica.com/science/human-evolution" target="_blank">Encyclopaedia Britannica – Human Evolution</a></strong></p>
+          <p>Trusted academic-style overview of classification and evolutionary development.</p>
+        </div>
+
+        <div class="card">
+          <p><strong><a href="https://www.google.com/search?q=Principles+of+Human+Evolution+Lewin+Foley" target="_blank">Lewin & Foley – Principles of Human Evolution (Book Reference)</a></strong></p>
+          <p>A strong academic book source for broader context and interpretation.</p>
+        </div>
+
+        <div class="card">
+          <p><strong><a href="https://evolution.berkeley.edu/evolution-101/" target="_blank">University of California, Berkeley – Understanding Evolution</a></strong></p>
+          <p>A clear, educational resource explaining the fundamentals of human evolution, natural selection, and evolutionary theory.</p>
+        </div>
+
+        <div class="card">
+          <p><strong><a href="https://www.sciencedirect.com/journal/journal-of-human-evolution" target="_blank">Journal of Human Evolution</a></strong></p>
+          <p>An excellent scholarly journal for peer-reviewed research.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="reflection" class="reflection" class="essay-bg">
+      <h2>Reflection Essay</h2>
+
+      <p>
+        For my unessay project, I chose to focus on human evolution because it is a topic that connects science, history, and human identity. I have always been interested in how humans developed over time and how we became the species we are today. This topic relates strongly to the themes of the course because it explores change over time, scientific discovery, and the way knowledge evolves through research and evidence.
+      </p>
+
+      <p>
+        My goal for this project was to visually represent the progression of human evolution in a way that is both educational and engaging. I created a website that includes an image showing the stages of evolution, along with written explanations and sources. I wanted to make something that not only presents information but also helps people understand the concept in a clear and memorable way.
+      </p>
+
+      <p>
+        One of the biggest challenges I faced was finding reliable sources and making sure they were appropriate for an academic project. At first, some of the links I used did not work or led to error pages, which made me realize the importance of verifying sources. I overcame this challenge by using trusted websites such as the Smithsonian Institution, the Natural History Museum, and educational resources from universities. This helped improve the credibility of my project.
+      </p>
+
+      <p>
+        Another challenge was learning how to properly format and build a website. I had to figure out how to insert images, adjust styles, and organize content using HTML and CSS. At times, this was frustrating, especially when things did not appear correctly on the page. However, through trial and error and problem-solving, I was able to improve my understanding of web development and successfully build the site.
+      </p>
+
+      <p>
+        If I were to do this project again, I would spend more time refining the design and making the website more interactive. For example, I could add animations, timelines, or clickable elements to enhance the user experience. I would also double-check all sources earlier in the process to avoid issues with broken links.
+      </p>
+
+      <p>
+        Overall, I believe my final product meets my goals because it clearly presents the concept of human evolution in both a visual and informative way. The website format makes it easy to navigate, and the combination of images and text helps communicate the topic effectively. I also enjoyed the creative freedom of this assignment, as it allowed me to explore a subject I am interested in while building something unique.
+      </p>
+
+      <p>
+        This project helped me develop both my research skills and my technical skills. I learned how to evaluate sources, organize information, and present it in a digital format. It also showed me how creativity and academic work can be combined to create something meaningful. Overall, this was a valuable and enjoyable experience.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    Human Evolution Un-Essay Website • Jeremy Salinas • ANTH-1324-03-Spring 2026
+  </footer>
+
+  <script>
+    function showAnswer() {
+      document.getElementById('quiz-answer').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
